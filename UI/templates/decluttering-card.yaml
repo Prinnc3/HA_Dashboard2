@@ -1,0 +1,662 @@
+light_auto_entitites:
+  card:
+    type: custom:auto-entities
+    filter:
+      include:
+        - group: '[[group]]'
+          options:
+            type: custom:mushroom-light-card
+            fill_container: true
+            layout: vertical
+            primary_info: name
+            secondary_info: state
+            use_light_color: true
+            show_brightness_control: true
+            show_color_control: true
+            show_color_temp_control: true
+            collapsible_controls: true
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            card_mod:
+              style: |
+                ha-card {
+                  background:
+                  {% if is_state(config.entity, 'on') %}
+                    rgba(var(--rgb-state-light), 0.1);
+                  {% endif %}
+                    #cfcfcf1a !important;
+                  border-radius: 12px !important;
+                }
+    card:
+      type: grid
+      square: false
+      columns: 2
+      title: '[[title]]'
+    show_empty: true
+    card_param: cards
+#################################################
+#                                               #
+#                  MAIN ROOMS                   #
+#                                               #
+#################################################
+
+# OFFICE GRID
+grid_office:
+  card:
+    type: custom:button-card
+    entity: light.office_group
+    name: Office
+    hold_action: !include ../popup/honeycomb/office_mode.yaml
+    template:
+      - rooms_base
+      - motion
+      - macbook
+      - server
+      - icon_office
+      # - light
+    variables:
+      state_on: >
+        [[[
+          let state = states['sensor.office_active'].state;
+          if (state == 'yes') return state;
+        ]]]
+      motion: input_boolean.brma
+      light_entity: light.office_group
+      server: binary_sensor.mbproserver_active
+      macbook: switch.macbook
+
+# LIVING ROOM GRID
+grid_living_room:
+  card:
+    type: custom:button-card
+    entity: light.living_room_group
+    name: Lounge
+    hold_action: !include ../popup/honeycomb/living.yaml
+    template:
+      - rooms_base
+      # - icon_living_sofa
+      # - icon_sofa
+      - icon_couch_lamp
+      - light
+    variables:
+      light_entity: light.living_room_group
+    card_mod:
+      style: |
+        #circle {
+        {%- if not is_state('light.shelly_rgbw_kitchen_led_strip', 'on') -%}
+          display:none !important;
+        {% endif %}
+        }
+
+# KITCHEN NORMAL
+grid_kitchen_normal:
+  card:
+    type: conditional
+    conditions:
+      - entity: sensor.kitchen_active
+        state_not: 'dishwashing'
+    card:
+      type: custom:button-card
+      entity: sensor.kitchen_active
+      name: Kitchen
+      template:
+        - rooms_base
+        - fan_circle
+        - motion
+        - icon_noodles
+        # - >
+        #   [[[ return variables.state === 'cooking' ? 'icon_pot' : 'icon_noodles';]]]
+      double_tap_action: !include ../popup/rooms/kitchen.yaml
+      hold_action: !include ../popup/honeycomb/kitchen.yaml
+      variables:
+        fan_circle: fan.hood_power
+        light_entity: light.kitchen_table_light
+        motion: binary_sensor.motion_sensor_kitchen
+
+# KITCHEN DISHWASING
+grid_kitchen_dishwasing:
+  card:
+    type: conditional
+    conditions:
+      - entity: sensor.kitchen_active
+        state: 'dishwashing'
+    card:
+      type: custom:button-card
+      entity: timer.dishwasher_remaining
+      name: Dishwasher
+      template:
+        - base
+        - appliance_circle
+        - icon_dish
+      double_tap_action:
+        action: fire-dom-event
+        browser_mod:
+          service: browser_mod.popup
+          data:
+            title: 'Dishwasher'
+            card_mod:
+              style:
+                #popup header
+                .:
+            content:
+              type: vertical-stack
+              cards:
+                - type: entities
+                  # title: Myčka nádobí
+                  entities:
+                    - entity: switch.mycka_nadobi_power
+                      name: Power
+                      icon: mdi:power
+                    - entity: binary_sensor.mycka_nadobi_door
+                      name: Door
+                    - entity: sensor.mycka_nadobi_operation_state
+                      name: Operation State
+                    - entity: sensor.mycka_nadobi_program_progress
+                      name: Program Progress
+                    - entity: sensor.mycka_nadobi_remaining_program_time
+                      name: Remaining Program Time
+
+      tap_action: !include ../popup/rooms/kitchen.yaml
+      hold_action: !include ../popup/honeycomb/kitchen.yaml
+      variables:
+        light_entity: light.kitchen_table_light
+        appliance: sensor.mycka_nadobi_program_progress
+
+# BEDROOM
+grid_bedroom:
+  card:
+    type: custom:button-card
+    entity: light.bedroom_group
+    name: Bedroom
+    double_tap_action: !include ../popup/rooms/bedroom.yaml
+    hold_action: !include ../popup/honeycomb/bedroom.yaml
+    template:
+      - rooms_base
+      - icon_double_bed
+      - babycam
+      # - icon_bedroom
+      # - icon_bed
+    variables:
+      babycam: switch.lidl_3_gang_socket_l3
+      light_entity: light.bedroom_group
+      state_on: >
+        [[[
+          let state = states['sensor.bedroom_active'].state;
+          if (state == 'yes') return state;
+        ]]]
+
+#################################################
+#                                               #
+#                     SECURITY                  #
+#                                               #
+#################################################
+
+# ALARM PANEL
+grid_alarm:
+  card:
+    type: custom:button-card
+    entity: alarm_control_panel.aqara_hub
+    hold_action: !include ../popup/honeycomb/security.yaml
+    template:
+      - alarm
+      - icon_alarm
+
+# FRONT DOOR
+grid_front_door:
+  card:
+    type: custom:button-card
+    entity: lock.nuki_neklanka_byt_lock
+    name: Front door
+    tap_action:
+      action: block
+    template:
+      - front_door
+      - loader
+      - icon_lock
+
+#  MOTION SENSORS
+grid_motion_sensors:
+  card:
+    type: custom:button-card
+    entity: sensor.motion_detected
+    tap_action: !include ../popup/security_sensors.yaml
+    template:
+      - sensors
+      - icon_motion
+
+#  CONTACT SENSORS
+grid_contact_sensors:
+  card:
+    type: custom:button-card
+    tap_action: !include ../popup/security_sensors.yaml
+    entity: sensor.doors_state
+    template:
+      - doors
+      - circle_state
+      - icon_closet
+
+#################################################
+#                                               #
+#                    DEVICES                    #
+#                                               #
+#################################################
+
+# APPLE TV
+grid_atv:
+  card:
+    type: custom:button-card
+    entity: media_player.living_room_tv
+    name: Apple TV
+    # double_tap_action: !include ../popup/rooms/atv_remote.yaml
+    double_tap_action: !include ../popup/rooms/apple_tv_card.yaml
+    hold_action: !include ../popup/honeycomb/atv.yaml
+    template:
+      - mediaplayer
+
+# SAMSUNG TV
+grid_samsung:
+  card:
+    type: custom:button-card
+    entity: media_player.bedroom_tv
+    name: >
+      [[[
+        let source = states['media_player.bedroom_tv'].attributes.source;
+          if ( variables.state_on && source !==  'Android TV Launcher' )
+            return source;
+          else
+            return 'Samsung';
+      ]]]
+    hold_action: !include ../popup/honeycomb/shield.yaml
+    template:
+      - mediaplayer
+
+# PLAYSTATION
+grid_playstation:
+  card:
+    type: custom:button-card
+    entity: switch.playstation_5_power
+    name: Playstation
+    template:
+      - base
+      - icon_ps5
+      - loader
+
+# HOMEPODS
+grid_homepods:
+  card:
+    type: custom:button-card
+    entity: media_player.homepods_mass
+    name: Homepods
+    variables:
+      media_on: >
+        [[[ return !entity || ['on', 'paused'].indexOf(entity.state) !== -1; ]]]
+      state_on: >
+        [[[ return !entity || ['playing'].indexOf(entity.state) !== -1; ]]]
+    template:
+      - base
+      - icon_homepod
+    double_tap_action:
+      action: fire-dom-event
+      browser_mod:
+        service: browser_mod.popup
+        data:
+          title: 'MASS'
+          size: 'wide'
+          card_mod:
+            style:
+              .: |
+                ha-dialog>ha-dialog-header {
+                  display: none;
+                }
+                @media (max-width: 450px), (max-height: 500px) {
+                  ha-dialog>ha-dialog-header {
+                    display: block !important;
+                  }
+                }
+          content:
+            type: iframe
+            # aspect_ratio: '100%'
+            url: /api/hassio_ingress/vY3Npsvoa2MxygW4H78Jr2ZEpMXsTJtX8DuZsXbT6mE/#/home
+
+#################################################
+#                                               #
+#                    ROOMS 2                    #
+#                                               #
+#################################################
+
+# SHOWER ROOM
+grid_shower:
+  card:
+    type: custom:button-card
+    entity: light.shower_group
+    name: Shower
+    # triggers_update:
+    #   - binary_sensor.motion_sensor_shower_room
+    #   - binary_sensor.contact_sensor_shower_room
+    template:
+      - door_state
+      - motion
+      - rooms_base
+      # - icon_shower
+      # - icon_shower_head
+      - icon_shower_new
+    variables:
+      light_entity: light.shower_group
+      motion: binary_sensor.motion_sensor_shower_room
+      door: binary_sensor.contact_sensor_shower_room
+
+# BATHROOM
+grid_bathroom:
+  card:
+    type: custom:button-card
+    entity: sensor.bathroom_active
+    name: Bathroom
+    # name: >
+    #   [[[ return variables.timeout;]]]
+    template:
+      - rooms_base
+      - motion
+      - door_state
+      - icon_bathroom
+    variables:
+      light_entity: light.bathroom_group
+      motion: binary_sensor.motion_sensor_bathroom
+      door: binary_sensor.contact_sensor_bathroom
+
+# UTILITY NORMAL
+grid_utility_normal:
+  card:
+    type: conditional
+    conditions:
+      - entity: sensor.appliance_active
+        state_not: 'cleaning'
+      - entity: sensor.appliance_active
+        state_not: 'washing'
+    card:
+      type: custom:button-card
+      entity: sensor.appliance_active
+      name: Utility
+      double_tap_action: !include ../popup/rooms/utility.yaml
+      hold_action: !include ../popup/honeycomb/utitlity.yaml
+      template:
+        - rooms_base
+        # - motion
+        - icon_broom
+      variables:
+        light_entity: light.utility_room_light
+        # motion: binary_sensor.motion_sensor_utility
+
+# UTILITY VACUUM
+grid_utility_vacuum:
+  card:
+    type: conditional
+    conditions:
+      - entity: sensor.appliance_active
+        state: cleaning
+    card:
+      type: custom:button-card
+      entity: sensor.appliance_active
+      name: Vacuum
+      double_tap_action:
+        action: fire-dom-event
+        browser_mod:
+          service: browser_mod.more_info
+          data:
+            entity: camera.roidmi_eve
+      hold_action: !include ../popup/honeycomb/utitlity.yaml
+      template:
+        - rooms_base
+        - icon_roborock
+      variables:
+        light_entity: light.utility_room_light
+
+# UTILITY WASHING
+grid_utility_washing:
+  card:
+    type: conditional
+    conditions:
+      - entity: sensor.appliance_active
+        state: washing
+    card:
+      type: custom:button-card
+      entity: sensor.appliance_active
+      name: Washdryer
+      double_tap_action: !include ../popup/rooms/utility.yaml
+      hold_action: !include ../popup/honeycomb/utitlity.yaml
+      template:
+        - rooms_base
+        - appliance_circle
+        - icon_washer
+      variables:
+        light_entity: light.utility_room_light
+        appliance: sensor.washer_dryer_program_progress
+
+# HALLWAY
+grid_hallway:
+  card:
+    type: custom:button-card
+    entity: light.hallway_group
+    name: Hallway
+    # double_tap_action: !include ../popup/hallway.yaml
+    state_display: >
+      [[[ if (variables.state == 'off' ) return " "; ]]]
+    template:
+      - rooms_base
+      # - icon_hallway
+      - icon_hanger_mirror
+      - motion
+    variables:
+      light_entity: light.hallway_group
+      motion: binary_sensor.motion_sensor_entrance
+
+#################################################
+#                                               #
+#                  CAMERAS                      #
+#                                               #
+#################################################
+
+# CAM DOOR
+grid_cam_door:
+  card:
+    type: custom:button-card
+    entity: camera.doorway
+    name: ' '
+    hold_action: !include ../popup/cameras.yaml
+    variables:
+      battery: sensor.doorway_battery_percentage
+    template:
+      - camera
+      - loader
+    styles:
+      card:
+        - background-position: center
+
+# CAM KIDS ROOM
+grid_cam_kids:
+  card:
+    type: custom:button-card
+    entity: camera.kids_room
+    name: ' '
+    hold_action: !include ../popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: 'sensor.doorway_battery_percentage'
+    styles:
+      card:
+        - background-position: center
+    #     - background-image: >
+    #         [[[
+    #             return `linear-gradient(0deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%), url(/local/tmp/${variables.entity_id}-latest.jpg)`;
+    #         ]]]
+# CAM TERRACE
+grid_cam_terrace:
+  card:
+    type: custom:button-card
+    entity: camera.terasa
+    name: ' '
+    hold_action: !include ../popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: sensor.terasa_battery_percentage
+    styles:
+      card:
+        - background-position: center
+
+# CAM GARDEN
+grid_cam_garden:
+  card:
+    type: custom:button-card
+    entity: camera.zahrada
+    name: ' '
+    hold_action: !include ../popup/cameras.yaml
+    template:
+      - camera
+      - loader
+    variables:
+      battery: sensor.zahrada_battery_percentage
+
+#################################################
+#                                               #
+#                  CLIMATE                      #
+#                                               #
+#################################################
+
+# AIR PURIFIER
+grid_air_purifier:
+  card:
+    type: custom:button-card
+    entity: sensor.home_climate
+    name: Humidity
+    tap_action: block
+    template:
+      - airpurifier
+    double_tap_action: !include ../popup/airpurifier.yaml
+
+# THERMOSTAT
+grid_thermostat:
+  card:
+    type: custom:button-card
+    entity: sensor.home_climate
+    name: Temperature
+    template:
+      - thermostat
+    double_tap_action: !include ../popup/thermostat.yaml
+    tap_action:
+      action: call-service
+      service: input_boolean.toggle
+      service_data:
+        entity_id: input_boolean.svg_temp_humid
+
+# LIVING ROOM COVERS
+grid_covers_living:
+  card:
+    type: custom:button-card
+    entity: cover.living_room_cover
+    name: Lounge
+    # hold_action: !include ../popup/honeycomb/cover_living.yaml
+    template:
+      - cover
+
+# LIVING ROOM COVERS
+grid_covers_bedroom:
+  card:
+    type: custom:button-card
+    entity: cover.bedroom_shutters
+    name: Bedroom
+    # hold_action: !include ../popup/honeycomb/cover_bedroom.yaml
+    template:
+      - cover
+
+#################################################
+#                                               #
+#                     HOME                      #
+#                                               #
+#################################################
+
+# PERSON NGOC
+grid_ngoc:
+  card:
+    type: custom:button-card
+    entity: person.viet_ngoc
+    name: Viet Ngoc
+    double_tap_action: !include ../popup/home_vietngoc.yaml
+    triggers_update:
+      - sensor.waze_ngoc_home
+    template:
+      - person
+    variables:
+      circle_input: >
+        [[[
+          let distance = Math.round(states['sensor.waze_ngoc_home'].attributes.distance);
+          if (distance) return distance;
+        ]]]
+      circle_input_unit: ' Km'
+    card_mod:
+      style: |
+        #circle {
+        {%- if is_state('person.viet_ngoc', 'home') -%}
+          display:none !important;
+        {% endif %}
+        }
+
+# PERSON ZUZU
+grid_zuzu:
+  card:
+    type: custom:button-card
+    entity: person.huong_giang
+    name: Zuzu
+    double_tap_action: !include ../popup/home_zuzu.yaml
+    tap_action:
+      action: call-service
+      service: script.turn_on
+      service_data:
+        entity_id: script.zuzu_entities
+    triggers_update:
+      - sensor.waze_zuzu
+    template:
+      - person
+    state_display: >
+      [[[
+        if (entity)
+          return variables.state === 'not_home' || variables.state === 'away'
+            ? states['sensor.gle'].state
+            : variables.state;
+      ]]]
+
+# WEATHER
+grid_weather:
+  card:
+    type: custom:button-card
+    entity: weather.prague_smichov
+    name: Prague
+    variables:
+      temp_min: sensor.weather_min_temp
+      temp_max: sensor.weather_max_temp
+      humidity: sensor.weather_humidity
+      current_weather: weather.prague_smichov
+    template:
+      - widget_weather
+
+# HOME MODE
+grid_home_mode:
+  card:
+    type: custom:button-card
+    entity: sensor.home_mode
+    name: Home mode
+    tap_action:
+      action: block
+    template:
+      - base
+      - icon_homemode
+    variables:
+      state_on: >
+        [[[ return true; ]]]
+    styles:
+      name:
+        - overflow: initial

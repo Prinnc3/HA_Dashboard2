@@ -1,0 +1,493 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Lights
+    style: |
+      --popup-min-width: 600px;
+      --popup-padding-x: 12px;
+      --popup-padding-y: 12px
+
+    card_mod:
+      style:
+        .: |
+          :host {
+            --ha-card-border-radius: 12px !important;
+            --ha-card-background: #cfcfcf1a !important;
+          }
+          @media (max-width: 450px), (max-height: 500px) {
+            ha-dialog {
+              --mdc-dialog-min-width: 100vw !important;
+              --mdc-dialog-min-height: 100vh !important;
+              --popup-border-radius: 0 !important;
+            }
+          }
+    content:
+      type: vertical-stack
+      cards:
+        - type: custom:auto-entities
+          card:
+            square: false
+            columns: 4
+            type: grid
+          card_param: cards
+          filter:
+            include:
+              - entity_id: light.all_light_group
+                state: 'on'
+                options:
+                  type: custom:mushroom-light-card
+                  layout: vertical
+                  secondary_info: none
+                  tap_action:
+                    action: toggle
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: rgba(var(--rgb-state-light), 0.1);
+                        padding: 5% !important;
+                      }
+                      mushroom-shape-icon {
+                        --icon-size: 55px;
+                      }
+              - group: light.all_light_group
+                state: 'on'
+                options:
+                  type: custom:mushroom-light-card
+                  fill_container: true
+                  use_light_color: true
+                  layout: vertical
+                  secondary_info: name
+                  primary_info: none
+                  tap_action:
+                    action: toggle
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: rgba(var(--rgb-state-light), 0.1);
+            exclude: []
+          sort:
+            method: domain
+        - type: custom:mod-card
+          card:
+            type: custom:mushroom-title-card
+            title: Living Room
+          card_mod:
+            style:
+              mushroom-title-card$: |
+                h1 {
+
+                  --title-font-size: 18px;
+                  --title-font-weight: normal;
+                }
+                .header {
+                  --title-padding: 5px;
+                }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.living_room_floor_lamp
+        #           name: Floor Lamp
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.shelly_dimmer
+        #           name: Ceiling Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.shelly_rgbw_kitchen_led_strip
+        #           name: Ceiling Led Strip
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           layout: horizontal
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        # - type: vertical-stack
+        #   cards:
+        #     - type: custom:mod-card
+        #       card:
+        #         type: custom:mushroom-title-card
+        #         title: Kitchen
+        #       card_mod:
+        #         style:
+        #           mushroom-title-card$: |
+        #             h1 {
+
+        #               --title-font-size: 18px;
+        #               --title-font-weight: normal;
+        #             }
+        #             .header {
+        #               --title-padding: 5px;
+        #             }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.kitchen_main_light
+        #           name: Main Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.kitchen_table_light
+        #           name: Ceiling Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.hood_lighting
+        #           name: Hood Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        # - type: vertical-stack
+        #   cards:
+        #     - type: custom:mod-card
+        #       card:
+        #         type: custom:mushroom-title-card
+        #         title: Office
+        #       card_mod:
+        #         style:
+        #           mushroom-title-card$: |
+        #             h1 {
+
+        #               --title-font-size: 18px;
+        #               --title-font-weight: normal;
+        #             }
+        #             .header {
+        #               --title-padding: 5px;
+        #             }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.office_lamp_bulb
+        #           name: Floor Lamp
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.office_led_light_strip
+        #           name: Desk Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.vocolinc_rpl_188bce_mood_light
+        #           name: Mood Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.office_main_light
+        #           name: Main Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.office_shelf_led
+        #           name: Shelf Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        # - type: vertical-stack
+        #   cards:
+        #     - type: custom:mod-card
+        #       card:
+        #         type: custom:mushroom-title-card
+        #         title: Bedroom
+        #       card_mod:
+        #         style:
+        #           mushroom-title-card$: |
+        #             h1 {
+
+        #               --title-font-size: 18px;
+        #               --title-font-weight: normal;
+        #             }
+        #             .header {
+        #               --title-padding: 5px;
+        #             }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.bedroom_main_light
+        #           name: Main Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.bedroom_closet_light
+        #           name: Closet Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.bedroom_ripple_mood_light
+        #           name: Mood Light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.shower_room_main_light
+        #           name: Shower
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.shower_room_main_light
+        #           name: Mirror
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        # - type: vertical-stack
+        #   cards:
+        #     - type: custom:mod-card
+        #       card:
+        #         type: custom:mushroom-title-card
+        #         title: Bathroom & Utility
+        #       card_mod:
+        #         style:
+        #           mushroom-title-card$: |
+        #             h1 {
+
+        #               --title-font-size: 18px;
+        #               --title-font-weight: normal;
+        #             }
+        #             .header {
+        #               --title-padding: 5px;
+        #             }
+        #     - type: horizontal-stack
+        #       cards:
+        #         - type: custom:mushroom-light-card
+        #           entity: light.bathroom_main_light
+        #           name: Ceiling light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.bathroom_mirror_light
+        #           name: Mirror light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }
+        #         - type: custom:mushroom-light-card
+        #           entity: light.utility_room_light
+        #           name: Utility light
+        #           fill_container: true
+        #           use_light_color: true
+        #           show_brightness_control: true
+        #           show_color_temp_control: true
+        #           show_color_control: true
+        #           collapsible_controls: true
+        #           card_mod:
+        #             style: |
+        #               ha-card {
+        #                 background:
+        #                   {% if is_state(config.entity, 'on') %}
+        #                     rgba(var(--rgb-state-light), 0.1);
+        #                   {% endif %}
+        #               }

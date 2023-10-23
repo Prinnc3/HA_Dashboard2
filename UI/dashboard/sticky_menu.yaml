@@ -1,0 +1,57 @@
+#################################################
+#                                               #
+#      STICKY BOTTOM MENU                       #
+#                                               #
+#################################################
+# - type: vertical-stack
+#   view_layout:
+#     grid-area: popup
+#     show:
+#       mediaquery: '(max-width: 799.99px)'
+#   cards:
+#     # POP UP
+
+#     - type: vertical-stack
+#       cards:
+#         - type: custom:bubble-card
+#           card_type: pop-up
+#           hash: '#office'
+#           name: Office
+#           icon: mdi:apple-keyboard-command
+#         - type: custom:auto-entities
+#           filter:
+#             include:
+#               - group: light.office_group
+#                 options:
+#                   type: custom:bubble-card
+#                   card_type: button
+#                   button_type: slider
+#             exclude: []
+#           card:
+#             type: grid
+#             square: false
+#             columns: 2
+#             title: Office
+#           show_empty: false
+#           card_param: cards
+#     - type: custom:gap-card
+#       height: 20
+# - type: horizontal-stack
+#   view_layout:
+#     grid-area: player
+#     show:
+#       mediaquery: '(max-width: 799.99px)'
+#   cards:
+#     - type: custom:button-card
+#       tap_action:
+#         action: assist
+#       template: chat_icon_only
+#     - type: custom:button-card
+#       tap_action:
+#         action: navigate
+#         navigation_path: '#office'
+#       template: chat_icon_only
+#     - type: custom:button-card
+#       tap_action:
+#         action: assist
+#       template: chat_icon_only

@@ -1,0 +1,33 @@
+#################################################
+#                                               #
+#                    DEVICES                    #
+#                                               #
+#################################################
+
+- type: grid
+  title: Devices
+  view_layout:
+    grid-area: devices
+  columns: 2
+  cards:
+    # APPLE TV
+    - type: custom:decluttering-card
+      template: grid_atv
+
+    # Samsung TV
+    - type: custom:decluttering-card
+      template: grid_samsung
+
+    # PLAYSTATION
+    - type: custom:decluttering-card
+      template: grid_playstation
+
+    # HOMEPODS
+    - type: custom:decluttering-card
+      template: grid_homepods
+
+    # - type: custom:button-card
+    #   name: Timer
+    #   entity: timer.dishwasher_remaining
+    #   template:
+    #     - base

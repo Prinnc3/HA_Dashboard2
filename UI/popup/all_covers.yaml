@@ -1,0 +1,56 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Covers Open
+    content:
+      type: custom:auto-entities
+      filter:
+        include:
+          - entity_id: cover.living_room_cover
+            options:
+              type: custom:mushroom-cover-card
+              show_position_control: true
+              show_tilt_position_control: true
+              show_buttons_control: true
+              layout: horizontal
+              fill_container: true
+              card_mod:
+                style: |
+                  ha-card {
+                    padding: 4px 12px 4px !important;
+                  }
+          - entity_id: cover.bedroom_shutters
+            options:
+              type: custom:mushroom-cover-card
+              show_position_control: true
+              show_tilt_position_control: true
+              show_buttons_control: true
+              layout: horizontal
+              fill_container: true
+              card_mod:
+                style: |
+                  ha-card {
+                    padding: 4px 12px 4px !important;
+                  }
+          - group: group.shades_cover
+            state: open
+            options:
+              type: custom:mushroom-cover-card
+              show_position_control: true
+              show_tilt_position_control: true
+              show_buttons_control: true
+              layout: horizontal
+              fill_container: true
+              card_mod:
+                style: |
+                  ha-card {
+                    padding: 4px 12px 4px !important;
+                  }
+        exclude: []
+      card:
+        type: custom:layout-card
+        cards: []
+        layout_type: masonry
+      sort:
+        method: domain

@@ -1,0 +1,32 @@
+type: panel
+theme: tablet
+icon: mdi:chart-box
+subview: false
+path: graph
+badges: []
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:history-explorer-card
+        cardName: historycard-addon-cpu
+        combineSameUnits: true
+        lineMode: lines
+        axisAddMarginMin: false
+        axisAddMarginMax: false
+        rounding: 4
+        showCurrentValues: true
+        decimation: fast
+        uiLayout:
+          toolbar: bottom
+
+      - type: custom:history-explorer-card
+        cardName: historycard-temp-humidity
+        combineSameUnits: true
+        lineMode: lines
+        axisAddMarginMin: false
+        axisAddMarginMax: false
+        rounding: 4
+        showCurrentValues: true
+        decimation: fast
+        uiLayout:
+          toolbar: bottom

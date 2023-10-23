@@ -1,0 +1,35 @@
+#################################################
+#                                               #
+#         MEDIA PLAYERS                         #
+#                                               #
+#################################################
+
+- entities:
+    - media_player.living_room_tv
+  tap_action: false
+  double_tap_action: more-info
+  hold_action: !include ../popup/honeycomb/atv.yaml
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'media-player-tv living-${entity.state}'
+    - service: floorplan.style_set
+      service_data:
+        element: "${entity.entity_id.replace('media_player.', 'media_player_overlay.')}"
+        style: |
+          >
+          if( entity.state === "playing" )
+            return "display: none;";
+          if( entity.state === "off" )
+            return "display: none;";
+          return `
+              display: block;
+                `
+- entities:
+    - media_player.bedroom_tv
+  tap_action: false
+  double_tap_action: more-info
+  hold_action: !include ../popup/honeycomb/shield.yaml
+
+  state_action:
+    - service: floorplan.class_set
+      service_data: 'media-player-tv media-player-${entity.state}'

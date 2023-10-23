@@ -1,0 +1,47 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Entrance & Utility
+    style: >
+      --popup-background-color: rgba(0, 0, 0, 0);
+      --popup-border-width: 0;
+      --button-card-border-radius: 10%;
+      --grid-card-gap: 5%;
+    card_mod:
+      style:
+        .: |
+        hui-grid-card:
+          $: |
+            #root {
+              margin: 0.3vw 0.3vw;
+            }
+
+    content:
+      type: grid
+      columns: 3
+      cards:
+        - type: custom:button-card
+          entity: light.utility_room_light
+          name: Utility
+          template:
+            - lightpop
+            - icon_light_recessed
+        - type: custom:button-card
+          entity: vacuum.robot_vacuum
+          name: Roborock
+          icon: phu:roborock
+          tap_action: !include ../footer/footer_vacuum.yaml
+          double_tap_action: !include ../footer/footer_vacuum.yaml
+          template:
+            - base
+            - icon_roborock
+
+        - type: custom:button-card
+          entity: sensor.siemens_wd4hu541eu_68a40e5663fa_bsh_common_setting_powerstate
+          name: Washer-Dryer
+          template:
+            - rooms_base
+            - icon_washer
+          double_tap_action:
+            action: more-info

@@ -1,0 +1,62 @@
+#################################################
+#                                               #
+#                  HORIZONTAL                   #
+#                                               #
+#################################################
+
+- type: grid
+  title: Movies
+  view_layout:
+    grid-area: movies
+    show:
+      mediaquery: '(min-width: 1441px)'
+  columns: 1
+  cards:
+    #Conditional Media
+    - type: custom:swipe-card
+      parameters:
+        pagination:
+          type: bullets
+          clickable: true
+        autoplay:
+          delay: 7000
+          disableOnInteraction: false
+          reverseDirection: false
+          pauseOnMouseEnter: true
+        effect: fade
+        fadeEffect:
+          crossFade: true
+        speed: 3000
+        spaceBetween: 0
+        slidesPerView: auto
+        roundLengths: true
+      cards:
+        - type: custom:button-card
+          entity: sensor.added_movies_2
+          name: ' '
+          template:
+            - added_movies
+
+        - type: custom:button-card
+          entity: sensor.added_movies_3
+          name: ' '
+          template:
+            - added_movies
+
+        - type: custom:button-card
+          entity: sensor.added_movies_4
+          name: ' '
+          template:
+            - added_movies
+
+        - type: custom:button-card
+          entity: sensor.added_movies_5
+          name: ' '
+          template:
+            - added_movies
+
+        - type: custom:button-card
+          entity: sensor.added_movies_6
+          name: ' '
+          template:
+            - added_movies

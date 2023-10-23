@@ -1,0 +1,85 @@
+type: custom:grid-layout
+icon: mdi:home-circle
+theme: tablet
+path: main
+layout:
+  # original
+  # default:
+  # margin: 0
+  # grid-gap: 3.5%
+  # grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0
+  # grid-template-rows: 0 fit-content(100%) fit-content(100%) 0fr
+  # grid-template-areas: |
+  #   "sidebar  .         .       .           .           ."
+  #   "sidebar  home      security  devices    mainrooms   ."
+  #   "sidebar  media     cameras   climate   other       ."
+  #   "sidebar  footer    footer    footer    footer      ."
+  #   "sidebar  .           .       .         .           ."
+
+  default:
+  margin: 0
+  grid-gap: 1.5%
+  grid-template-columns: 0 1fr 1fr 1fr 1fr 1fr 1fr 0
+  grid-template-rows: 0 min-content fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+  grid-template-areas: |
+    ". .         .          .         .        .          .          ."
+    ". chips     chips      chips     chips    weather    header     ."
+    ". security  mainrooms  devices   other    floorplan  floorplan  ."
+    ". cameras   climate    nowplay   movies   floorplan  floorplan  ."
+    ". footer    footer     footer    footer   nowplaying nowplaying ."
+    ". .         .          .         .        .          .          ."
+
+  mediaquery:
+    # # 2k
+    # '(min-width: 1441px) and (max-width: 1699px)':
+    #   grid-gap: 2vw
+    #   grid-template-columns: 1fr 1fr 1fr 1fr 0
+    #   grid-template-rows: 0 fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+    #   grid-template-areas: |
+    #     "sidebar  .           .        .          ."
+    #     "sidebar  home      security   devices    ."
+    #     "sidebar  climate   mainrooms  other      ."
+    #     "sidebar  movies    nowplay    cameras    ."
+    #     "sidebar  floorplan floorplan  floorplan  ."
+    #     "sidebar  footer    footer     footer     ."
+    #     "sidebar  .           .       .           ."
+
+    #portrait
+    '(min-width: 801px) and (max-width: 1440px)':
+      grid-gap: 1vw
+      grid-template-columns: 0 1fr 1fr 1fr 0
+      grid-template-rows: fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%) 0fr
+      grid-template-areas: |
+        ".  sidebar    home        security  ."
+        ".  media      cameras     climate   ."
+        ".  mainrooms  devices     other     ."
+        ".  floorplan  floorplan   floorplan ."
+        ".  footer     footer      footer    ."
+        ".  .          .           .         ."
+
+    # phone
+    '(max-width: 800px)':
+      # grid-gap: calc(var(--custom-layout-card-padding) * 1.7)
+      grid-gap: 1.8vw
+      margin: 0
+      # grid-template-columns: 0 repeat(2, 1fr) 0
+      grid-template-columns: 0 1fr 1fr 0
+      grid-template-rows: 0 min-content min-content fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%)  fit-content(100%) fit-content(100%) fit-content(100%) fit-content(100%)
+      grid-template-areas: |
+        ". .            .        ."
+        ". header      weather   ."
+        ". chips       chips     ."
+        ". home        security  ."
+        ". media       cameras   ."
+        ". mainrooms   devices   ."
+        ". other       climate   ."
+        ". floorplan   floorplan ."
+        ". footer      footer    ."
+
+#################################################
+#                                               #
+#                    DASHBOARD                  #
+#                                               #
+#################################################
+
+cards: !include_dir_merge_list dashboard/
