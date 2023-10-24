@@ -1,5 +1,6 @@
 # hass-config
+![wide](https://github.com/ngocjohn/hass-config/assets/96962827/0409cc53-6305-4f4b-8b51-9a4b44845a32)
+![portrait](https://github.com/ngocjohn/hass-config/assets/96962827/ef3c29a0-83f9-4a3c-98df-f63c49a30b48)
+![mobile](https://github.com/ngocjohn/hass-config/assets/96962827/f31727f9-9061-4d83-b34e-5e430d75dd93)
 
-![wide](https://github.com/ngocjohn/hass-config/assets/96962827/d047420a-5954-43d2-adca-b7e63c12ec86)
-![portrait](https://github.com/ngocjohn/hass-config/assets/96962827/a1e25081-9573-44c6-a0e1-63c9adf1864a)
-![mobile](https://github.com/ngocjohn/hass-config/assets/96962827/3b671929-521e-44db-bcbf-47fb78aee7a3)
+
