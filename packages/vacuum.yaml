@@ -1,0 +1,102 @@
+homeassistant:
+  customize:
+    vacuum.robot_vacuum:
+      icon: phu:roborock
+    sensor.robot_vacuum_last_clean_end:
+      friendly_name: Last clean
+      icon: mdi:calendar-clock
+
+# camera:
+# XIOMI ROBOT VACUUM V1
+
+# - platform: xiaomi_cloud_map_extractor
+#   host: !secret vacuum_host
+#   token: !secret vacuum_token
+#   username: !secret vacuum_username
+#   password: !secret vacuum_password
+#   country: 'de'
+#   name: 'Vacuum Camera'
+#   colors:
+#     color_robo: [255, 89, 9]
+#     color_charger: [27, 117, 27]
+#     color_path: [109, 37, 37]
+#     color_goto_path: [30, 80, 113]
+#     color_obstacle: [30, 30, 30]
+#     color_virtual_walls: [255, 0, 0, 60]
+#     color_no_go_zones_outline: [255, 0, 0, 60]
+#     color_no_go_zones: [255, 0, 0, 28]
+#     color_map_inside: [115, 115, 115, 40]
+#     color_map_outside: [0, 0, 0, 0]
+#     color_grey_wall: [0, 0, 0, 0]
+#     color_map_wall: [255, 255, 255, 80]
+#     color_zones_outline: [0, 0, 0, 0]
+#     color_zones: [0, 0, 0, 0]
+#   draw: ['all']
+#   map_transformation:
+#     # rotate: 180
+#     scale: 1
+#     trim:
+#       top: 10
+#       bottom: 5
+#       right: 10
+#       left: 10
+#   sizes:
+#     charger_radius: 5
+#     vacuum_radius: 5
+#   attributes:
+#     - calibration_points
+#     - vacuum_position
+#     - image
+#     - is_empty
+#   auto_update: false
+#   store_map_image: true
+#   store_map_path: /config/tmp
+#   force_api: xiaomi
+
+# automation:
+#   - id: '1669079262914'
+#     alias: Disable vacuum camera update when docked
+#     description: ''
+#     use_blueprint:
+#       path: PiotrMachowski/disable_vacuum_camera_update_when_docked.yaml
+#       input:
+#         vacuum: vacuum.robot_vacuum
+#         camera: camera.vacuum_camera
+
+template:
+  - sensor:
+      - unique_id: vacuum_filter
+        state: >
+          {% set entity_id = 'sensor.robot_vacuum_filter_left' %} {{ (states(entity_id) | int(default=0) / 5400) | int(default=0) }}
+
+        attributes:
+          friendly_name: Filter
+          icon: cil:roborock-filter
+          unit_of_measurement: '%'
+
+      - unique_id: vacuum_mainbrush
+        state: >
+          {% set entity_id = 'sensor.robot_vacuum_main_brush_left' %} {{ (states(entity_id) | int(default=0) / 10800) | int(default=0) }}
+
+        attributes:
+          friendly_name: Mainbrush
+          icon: cil:roborock-mainbrush
+          unit_of_measurement: '%'
+
+      - unique_id: vacuum_sensors
+        state: >
+          {% set entity_id = 'sensor.robot_vacuum_sensor_dirty_left' %} {{ (states(entity_id) | int(default=0) / 1080) | int(default=0) }}
+
+        attributes:
+          friendly_name: Sensors
+          icon: cil:roborock-sensor
+          unit_of_measurement: '%'
+
+      - unique_id: vacuum_sidebrush
+        state: >
+          {% set entity_id = 'sensor.robot_vacuum_side_brush_left' %} {{ (states(entity_id) | int(default=0) / 7200) | int(default=0) }}
+
+        attributes:
+          friendly_name: Sidebrush
+          icon: cil:roborock-sidebrush
+          unit_of_measurement: '%'
