@@ -2,6 +2,11 @@
 
 This is my Home Assistant installation.
 
+
+https://github.com/ngocjohn/homeassistant-config/assets/96962827/850b0acf-223d-49ca-868e-9dfeec6fc98c
+
+
+
 ## Some statistics about my installation:
 
 Description | value
