@@ -12,13 +12,13 @@ https://github.com/ngocjohn/homeassistant-config/assets/96962827/850b0acf-223d-4
 Description | value
 -- | --
 Automations | 27
-Binary sensors | 174
+Binary sensors | 187
 Device trackers | 52
 Lights | 53
 Media players | 40
-Sensors | 743
+Sensors | 794
 Switches | 185
-Other | 501
+Scripts | 37
 
 
 ## My installed extensions:
