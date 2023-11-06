@@ -30,7 +30,6 @@ My Theme:
   mdc-theme-surface: var(--popup-background-color)
   dialog-box-shadow: 0px 2px 4px 0px rgba(0, 0 ,0 , .2)
   header-height: 48px
-  masonry-view-card-margin: 0px
   state-icon-color: '#9da0a2'
   state-icon-active-color: '#3182b7'
   state-active-color: '#b68349'
@@ -149,6 +148,7 @@ My Theme:
         --tablet-popup-content-padding: 1.4em 2.2em 1.6em 1.5em;
         --tablet-popup-border-style: 1.5px solid rgba(0,0,0,0.2);
         --tablet-popup-header-color: rgba(0, 0, 0, 0) !important;
+
       }
 
       ha-dialog > div.content > div.container {

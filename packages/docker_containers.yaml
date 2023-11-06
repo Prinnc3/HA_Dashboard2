@@ -105,19 +105,6 @@ sensor:
     timeout: 60
     scan_interval: 360
 
-  # - platform: rest ## NODE RED ##
-  #   unique_id: container_nodered
-  #   name: Node Red
-  #   icon: si:nodered
-  #   json_attributes:
-  #     - state
-  #     - status
-  #     - image
-  #   resource: http://192.168.0.146:8126/container/node-red-node-red-1
-  #   value_template: >
-  #     {{ value_json.state }}
-  #   timeout: 60
-  #   scan_interval: 360
 template:
   - binary_sensor:
       ########################################
