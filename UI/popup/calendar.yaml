@@ -1,0 +1,33 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: "[[[ return states['sensor.date_en'].state;]]]"
+    content:
+      type: custom:atomic-calendar-revive
+      # name: Calendar
+      enableModeChange: true
+      entities:
+        - entity: calendar.ceske_statni_svatky
+          name: České státní svátky
+        - entity: calendar.home_assistant_devs
+          name: Home assistant devs
+        - entity: calendar.personal
+          name: Personal
+      showDate: false
+      showDeclined: false
+      showLastCalendarWeek: true
+      calShowDescription: true
+      disableCalLocationLink: false
+      dimFinishedEvents: false
+      defaultMode: Calendar
+      showLoader: true
+      showRelativeTime: false
+      hideDuplicates: false
+      showLocation: false
+      offsetHeaderDate: true
+      showAllDayEvents: true
+      allDayBottom: false
+      compactMode: false
+      showMultiDayEventParts: true
+      showCurrentEventLine: true

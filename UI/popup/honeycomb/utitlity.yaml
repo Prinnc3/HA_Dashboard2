@@ -19,7 +19,7 @@ service_data:
     - icon: phu:roborock
       position: 1
       show: true
-      entity: vacuum.robot_vacuum
+      entity: vacuum.roidmi_eve
       active: '[[[ return entity.state != "docked" ]]]'
       tap_action: !include ../footer/footer_vacuum.yaml
 
@@ -27,7 +27,7 @@ service_data:
     - icon: mdi:play-pause
       position: 2
       show: true
-      entity: vacuum.robot_vacuum
+      entity: vacuum.roidmi_eve
       tap_action:
         action: call-service
         service: >
@@ -39,28 +39,24 @@ service_data:
             ]]]`
           ]]]
         service_data:
-          entity_id: vacuum.robot_vacuum
+          entity_id: vacuum.roidmi_eve
     #3
     - icon: mdi:battery-charging
       position: 3
       show: true
-      entity: vacuum.robot_vacuum
+      entity: vacuum.roidmi_eve
       active: '[[[ return entity.state != "docked" ]]]'
       tap_action:
         action: call-service
         service: vacuum.return_to_base
         service_data:
-          entity_id: vacuum.robot_vacuum
+          entity_id: vacuum.roidmi_eve
     #4
     - icon: mdi:delete-empty
       position: 4
       show: true
-      entity: vacuum.robot_vacuum
+      entity: vacuum.roidmi_eve
       active: '[[[ return entity.state != "docked" ]]]'
       tap_action:
         action: call-service
-        service: vacuum.send_command
-        service_data:
-          entity_id: vacuum.robot_vacuum
-          command: app_goto_target
-          params: [24844, 32666]
+        service: script.vacuum_empty_bin

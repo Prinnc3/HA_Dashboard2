@@ -242,6 +242,7 @@ conditional_media:
       - line-height: 120%
       - padding-bottom: 1.5%
       - max-width: unset
+      - font-family: system-ui
       # - overflow: visible
     card:
       - padding: 5.75% 5.75% 0 5.75%

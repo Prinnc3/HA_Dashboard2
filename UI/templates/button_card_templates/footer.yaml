@@ -337,6 +337,8 @@ icon_name:
       - background: '#FFFFFF10'
 
 icon_only:
+  template:
+    - extra_styles
   show_name: false
   color: '#9da0a2'
   styles:

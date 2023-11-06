@@ -11,7 +11,7 @@ base:
     - extra_styles
   variables:
     state_on: >
-      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
+      [[[ return ['on', 'home', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská', 'active' ].indexOf(!entity || entity.state) !== -1; ]]]
     state_error: >
       [[[ return ['error', 'unavailable'].indexOf(entity === undefined || entity.state) !== -1; ]]]
     state: >
@@ -212,22 +212,31 @@ extra_styles:
   extra_styles: >
     [[[
       if (entity) {
-        if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
-          let hs = entity.attributes.hs_color === undefined,
-            h = hs || entity.attributes.hs_color[0],
-            s = hs || entity.attributes.hs_color[1],
-            l_min = 28,
-            l_max = 48,
-            l_calc = entity.attributes.brightness / 2.54 * (l_max - l_min) / 100 + l_min;
-          var light_color =
-              entity.attributes.color_mode === 'color_temp' ||
-              entity.attributes.color_mode === 'brightness' ||
-              entity.attributes.color_mode === 'unknown'
-                  ? `hsl(204, 58%, ${l_calc}%);`
-                  : `hsl(${h}, ${s}%, ${l_calc}%);`;
-        }
-      }
+          if (entity.entity_id.split('.')[0] === 'light' && variables.state_on) {
 
+              // theme variable and conditions
+              let style = getComputedStyle(document.body),
+                  theme_var = style.getPropertyValue('--button-card-light-color-temp'),
+                  is_hsl = theme_var.startsWith('hsl('),
+                  is_color_temp = entity.attributes.color_mode === 'color_temp';
+
+              if (is_hsl && is_color_temp && entity.attributes.brightness) {
+
+                  // calculate lightness in hsl
+                  let regex_pattern = /(\d+)(?!.*\d)/g,
+                      brightness = entity.attributes.brightness / 2.54,
+                      lightness = parseFloat(theme_var.match(regex_pattern)[0]),
+                      min = lightness - 10,
+                      max = lightness + 10,
+                      calc_lightness = brightness * (max - min) / 100 + min;
+
+                  var light_color = theme_var.replace(regex_pattern, calc_lightness);
+              }
+              else {
+                  var light_color = 'var(--button-card-light-color)';
+              }
+          }
+      }
       return `
 
        /* * * * * * * * * * * * * * * * * *
@@ -238,9 +247,9 @@ extra_styles:
 
         svg {
           --light-color:
-          ${ variables.state_on && entity.attributes.brightness !== undefined
+          ${ variables.state_on && entity.attributes.brightness
               ? light_color
-              : variables.state_on && entity.attributes.brightness === undefined
+              : variables.state_on && !entity.attributes.brightness
                 ? 'var(--state-icon-active-color);'
                 : 'var(--state-icon-color);'
           }
@@ -665,13 +674,16 @@ extra_styles:
 
         `:''}
 
-        ${this._config.template.includes('icon_name') ? `
+        ${(this._config.template.includes('icon_name') || this._config.template.includes('icon_only')) ? `
         #card {
           background: rgba(255, 255, 255, 0.06);
         }
         #card:hover {
           background: rgba(255, 255, 255, 0.15) !important;
           scale: 1.05;
+        }
+        #icon:hover, #name:hover {
+          color: rgb(255, 255, 255) !important;
         }
         `:''}
 

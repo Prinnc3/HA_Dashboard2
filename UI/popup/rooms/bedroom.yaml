@@ -60,13 +60,6 @@ browser_mod:
         - type: custom:button-card
           entity: media_player.bedroom_tv
           name: Samsung
-          variables:
-            state_on: >
-              [[[ return ['on', 'idle', 'playing', 'paused','standby'].indexOf(!entity || entity.state) !== -1; ]]]
-          trigger_updates:
-            - media_player.shieldtv
-            - media_player.samsung_tv
-            - media_player.shield
           double_tap_action:
             action: more-info
           hold_action: !include ../honeycomb/shield.yaml

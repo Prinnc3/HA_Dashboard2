@@ -344,8 +344,7 @@ wide_timeclock:
   show_name: false
   show_label: false
   show_icon: false
-  tap_action:
-    action: block
+  tap_action: !include /config/UI/popup/calendar.yaml
   double_tap_action:
     action: block
   hold_action:

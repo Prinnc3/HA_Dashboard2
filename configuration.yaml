@@ -24,8 +24,6 @@ default_config:
 frontend:
   extra_module_url:
     - /hacsfiles/lovelace-card-mod/card-mod.js
-    - /local/dashboard-resources/custom_restart.js
-
   themes: !include_dir_merge_named themes
 
 # LOVELACE
@@ -61,4 +59,3 @@ stt:
 automation ui: !include automations.yaml
 automation manual: !include_dir_merge_list automations/
 script: !include scripts.yaml
-python_script:

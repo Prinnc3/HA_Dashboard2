@@ -1,6 +1,8 @@
 kiosk_mode:
   hide_header: false
-  hide_unused_entities: false
+  hide_unused_entities: true
+  hide_edit_dashboard: true
+  hide_account: true
   mobile_settings:
     hide_header: true
     hide_unused_entities: true
@@ -11,7 +13,7 @@ swipe_nav:
   wrap: false
   enable_mouse_swipe: true
   animate: swipe
-  prevent_default: false
+  prevent_default: true
   swipe_amount: 15
 
 button_card_templates: !include_dir_merge_named UI/templates/button_card_templates

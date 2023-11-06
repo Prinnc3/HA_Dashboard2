@@ -5,7 +5,7 @@ chips:
     - extra_styles
   variables:
     state_on: >
-      [[[ return ['on', 'home', 'Normal', 'Away', 'Night', 'Guest', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova'].indexOf(!entity || entity.state) !== -1; ]]]
+      [[[ return ['on', 'home', 'Normal', 'Away', 'Night', 'Guest', 'cool', 'fan_only', 'unlocked', 'open', 'streaming', 'yes', 'Blažičkova', 'Plzeňská'].indexOf(!entity || entity.state) !== -1; ]]]
     state: >
       [[[ return !entity || entity.state; ]]]
 

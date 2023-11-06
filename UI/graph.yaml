@@ -20,6 +20,18 @@ cards:
           toolbar: bottom
 
       - type: custom:history-explorer-card
+        cardName: historycard-addon-memory
+        combineSameUnits: true
+        lineMode: lines
+        axisAddMarginMin: false
+        axisAddMarginMax: false
+        rounding: 4
+        showCurrentValues: true
+        decimation: fast
+        uiLayout:
+          toolbar: bottom
+
+      - type: custom:history-explorer-card
         cardName: historycard-temp-humidity
         combineSameUnits: true
         lineMode: lines

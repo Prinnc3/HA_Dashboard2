@@ -9,9 +9,9 @@ card:
       secondary_info:
         attribute: Uptime
       entities:
-        - entity: sensor.template_unifi_office_ap_cpu
+        - entity: sensor.unifi_office_ap_cpu
           name: CPU
-        - entity: sensor.template_unifi_office_ap_ram
+        - entity: sensor.unifi_office_ap_ram
           name: RAM
         - icon: mdi:restart
           tap_action:
@@ -29,13 +29,13 @@ card:
       secondary_info:
         entity: sensor.unifi_office_ap
       entities:
-        - entity: sensor.template_unifi_office_ap_2ghz_wifi_devices
+        - entity: sensor.unifi_office_ap_2_4ghz_clients
           name: 2.4GhZ
           unit: ' '
-        - entity: sensor.template_unifi_office_ap_5ghz_wifi_devices
+        - entity: sensor.unifi_office_ap_5ghz_clients
           name: 5GhZ
           unit: ' '
-        - entity: sensor.template_unifi_office_ap_guests
+        - entity: sensor.unifi_office_ap_guests
           name: Guests
           unit: ' '
     - type: custom:multiple-entity-row
@@ -46,12 +46,12 @@ card:
       secondary_info:
         attribute: Score
       entities:
-        - entity: sensor.template_unifi_office_ap2_score
+        - entity: sensor.unifi_office_ap_2_4ghz_score
           name: 2gHz
           unit: '%'
           tap_action:
             action: none
-        - entity: sensor.template_unifi_office_ap5_score
+        - entity: sensor.unifi_office_ap_5ghz_score
           name: 5gHz
           unit: '%'
           tap_action:
@@ -74,7 +74,7 @@ card:
           color: '#ff8a00'
       group: false
       font_size: 12px
-      hours_to_show: 24
+      hours_to_show: 12
       show:
         name: false
         icon: false

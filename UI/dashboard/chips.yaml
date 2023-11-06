@@ -107,7 +107,7 @@
               [[[
                 let state;
                 if (variables.state === 'Guest') {
-                  state = '#eae2b7';
+                  state = '#337acc';
                 }
                 if (variables.state === 'Normal') {
                   state = '#607D8B';

@@ -376,6 +376,10 @@ radiator:
                   : Math.round(entity.attributes.current_temperature).toString();
         }
       ]]]
+    # circle_input: >
+    #   [[[
+    #     return Math.round(entity.attributes.current_temperature).toString();
+    #   ]]]
 
     circle_input_unit: '°C'
   state_display: >

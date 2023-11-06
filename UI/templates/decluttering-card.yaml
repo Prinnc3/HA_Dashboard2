@@ -114,6 +114,25 @@ grid_kitchen_normal:
         fan_circle: fan.hood_power
         light_entity: light.kitchen_table_light
         motion: binary_sensor.motion_sensor_kitchen
+      # custom_fields:
+      #   timer:
+      #     card:
+      #       type: custom:button-card
+      #       entity: timer.dishwasher_remaining
+      #       aspect_ratio: 1/1
+      #       show_icon: false
+      #       show_state: true
+      #       show_name: false
+      # styles:
+      #   custom_fields:
+      #     timer:
+      #       - display: block
+      #       - position: absolute
+      #       - top: '-10%'
+      #       - right: 0%
+      #       - width: 45%
+      #       - background-color: 'rgb(3, 169, 244)'
+      #       - border-radius: 50%
 
 # KITCHEN DISHWASING
 grid_kitchen_dishwasing:
@@ -406,6 +425,8 @@ grid_utility_vacuum:
           data:
             entity: camera.roidmi_eve
       hold_action: !include ../popup/honeycomb/utitlity.yaml
+      state_display: >
+        [[[ return states['sensor.vacuum_status_fix'].state; ]]]
       template:
         - rooms_base
         - icon_roborock
