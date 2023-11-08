@@ -22,4 +22,4 @@ decluttering_templates: !include UI/templates/decluttering-card.yaml
 
 views:
   - !include UI/main.yaml
-  - !include UI/graph.yaml
+  - !include UI/monitoring.yaml

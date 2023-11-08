@@ -1,0 +1,38 @@
+type: panel
+theme: tablet
+icon: mdi:chart-box
+subview: false
+path: graph
+badges: []
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:history-explorer-card
+        cardName: historycard-sys
+        header: 'System Monitoring'
+        uimode: dark
+        defaultTimeOffset: 1h
+        refresh:
+          automatic: true
+          interval: 30
+        combineSameUnits: true
+        defaultTimeRange: 12h
+        decimation: fast
+        lineGraphHeight: 300
+        uiLayout:
+          toolbar: top
+          selector: hide
+        tooltip:
+          size: full
+        graphs:
+          - type: line
+            entities:
+              - entity: sensor.*_cpu_percent
+                lineMode: lines
+          - type: line
+            entities:
+              - entity: sensor.*_memory_percent
+          - type: line
+            entities:
+              - entity: sensor.processor_temperature
+                lineMode: curves

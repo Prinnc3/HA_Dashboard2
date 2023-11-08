@@ -3,35 +3,35 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Zuzu
-    style: |
-      --popup-max-width: calc(430px + 430px);
+    style: >
+      --popup-max-width: calc(450px + 450px);
     card_mod:
       style:
         .: |
-          @media (max-width: 450px), (max-height: 500px) {
-            ha-dialog {
-              --mdc-dialog-min-width: 100vw !important;
-              --mdc-dialog-min-height: 100vh !important;
-              --popup-border-radius: 0 !important;
-            }
-          }
+
         layout-card:
           $grid-layout$:
             # card divider border
             .: |
-
+              #root > * {
+                margin: 0px !important;
+              }
+              @media (max-width: 450px), (max-height: 500px) {
+                #root {
+                  display: block !important;
+                }
+              }
             hui-vertical-stack-card$: |
               #root {
                 border-right: 0.1vw solid rgba(58, 69, 73, 0.2);
                 border-radius: 0;
-                padding: 0px 0.5vw 0px 0px;
+                transition: none;
               }
               /* portrait */
               @media screen and (max-width: 800px) {
-                #root {
+                #root{
                   border-right: none;
-                  padding: 0 0 1vh 0 !important;
-                  border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2) !important;
+                  border-bottom: 0.1vw solid rgba(58, 69, 73, 0.2);
                 }
               }
 
@@ -40,19 +40,23 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 0 410px 410px 0
-        grid-template-rows: min-content
+        grid-template-columns: 450px 450px
         grid-template-areas: |
-          ". person history ."
+          "person history"
         mediaquery:
-          #phone
-          '(max-width: 800px)':
+          #portrait
+          '(max-width: 1200px)':
             grid-template-columns: 1fr
-            grid-template-rows: min-content
+            grid-template-rows: fit-content(100%)
             grid-template-areas: |
               "person"
               "history"
       cards:
+        #################################################
+        #                                               #
+        #                PERSON POPUP                   #
+        #                                               #
+        #################################################
         - type: vertical-stack
           view_layout:
             grid-area: person
@@ -78,7 +82,7 @@ browser_mod:
                 - entity: person.huong_giang
                   name: ' '
             - type: map
-              default_zoom: 16
+              default_zoom: 14
               dark_mode: true
               hours_to_show: 12
               entities:
@@ -119,18 +123,20 @@ browser_mod:
                     .leaflet-pane.leaflet-tile-pane {
                       filter: invert(0.95) grayscale(0.95) contrast(95%);
                     }
-
         - type: logbook
           view_layout:
             grid-area: history
           title: Logbook
           entities:
-            - person.huong_giang
             - sensor.gle
           hours_to_show: 24
           style: |
             ha-card {
               display: block !imporant;
+              border: none !important;
+              justify-content: unset;
+              align-items: stretch;
+              margin-inline: 5px;
             }
             ha-logbook {
               height: 470px !important;

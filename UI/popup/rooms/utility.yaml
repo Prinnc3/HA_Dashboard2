@@ -38,10 +38,36 @@ browser_mod:
             - icon_roborock
 
         - type: custom:button-card
-          entity: sensor.siemens_wd4hu541eu_68a40e5663fa_bsh_common_setting_powerstate
+          entity: switch.washer_dryer_power
           name: Washer-Dryer
           template:
             - rooms_base
             - icon_washer
+          tap_action: block
           double_tap_action:
-            action: more-info
+            action: fire-dom-event
+            browser_mod:
+              service: browser_mod.popup
+              data:
+                title: 'Washer-Dryer'
+                card_mod:
+                  style:
+                    #popup header
+                    .:
+                content:
+                  type: vertical-stack
+                  cards:
+                    - type: entities
+                      entities:
+                        - entity: switch.washer_dryer_power
+                          name: Power
+                          icon: mdi:power
+                          secondary_info: last-changed
+                        - entity: binary_sensor.washer_dryer_door
+                          name: Door
+                        - entity: sensor.washer_dryer_operation_state
+                          name: Operation State
+                        - entity: sensor.washer_dryer_program_progress
+                          name: Program Progress
+                        - entity: sensor.washer_dryer_remaining_program_time
+                          name: Remaining Program Time

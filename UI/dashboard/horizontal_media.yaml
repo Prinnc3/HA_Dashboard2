@@ -43,7 +43,6 @@
                 variables:
                   playlist_type: default
 
-
             - type: conditional
               conditions:
                 - entity: select.conditional_media
@@ -152,7 +151,7 @@
                 - spotify
               variables:
                 playlist_type: featured
-                country_code: CZ
+                country_code: VN
 
         #Media Players
         - type: grid
